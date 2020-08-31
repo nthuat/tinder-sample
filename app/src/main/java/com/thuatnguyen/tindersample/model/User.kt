@@ -23,7 +23,11 @@ data class Name(
     val first: String,
     val last: String,
     val title: String
-)
+) {
+    fun getFullName(): String {
+        return "$first $last"
+    }
+}
 
 data class Location(
     val city: String,
