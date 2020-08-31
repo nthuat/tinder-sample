@@ -1,0 +1,12 @@
+ext.versions = [
+        minSdk     : 21,
+        compileSdk : 29,
+        versionCode: 1,
+        versionName: '1.0.0',
+        kotlin     : '1.3.72',
+        coroutines : '1.3.9',
+        constraint : '2.0.1',
+        retrofit   : '2.9.0',
+        lifecycle  : '2.2.0'
+
+]
