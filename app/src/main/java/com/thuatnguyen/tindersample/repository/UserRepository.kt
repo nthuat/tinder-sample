@@ -6,8 +6,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class UserRepository(private val userApiService: UserApiService) {
+class UserRepository @Inject constructor(private val userApiService: UserApiService) {
 
     fun getUsersFromNetwork(): Flow<List<User>> {
         return flow {

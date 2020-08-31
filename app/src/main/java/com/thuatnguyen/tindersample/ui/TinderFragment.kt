@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.thuatnguyen.tindersample.R
+import dagger.hilt.android.AndroidEntryPoint
 
 private const val ARG_FAVORITE_USER_MODE = "favorite_user_mode"
 
+@AndroidEntryPoint
 class TinderFragment : Fragment() {
     private lateinit var viewModel: UserViewModel
     private var isFavoriteUserMode: Boolean = false

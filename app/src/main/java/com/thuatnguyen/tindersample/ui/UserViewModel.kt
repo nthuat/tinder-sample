@@ -1,5 +1,6 @@
 package com.thuatnguyen.tindersample.ui
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +10,8 @@ import com.thuatnguyen.tindersample.repository.UserRepository
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
+class UserViewModel @ViewModelInject constructor(private val userRepository: UserRepository) :
+    ViewModel() {
 
     private val _userLiveData = MutableLiveData<List<User>>()
     val userLiveData: LiveData<List<User>> = _userLiveData
