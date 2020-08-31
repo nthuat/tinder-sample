@@ -50,7 +50,7 @@ class TinderFragment : Fragment(), CardStackListener {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         registerObservers()
-        viewModel.getNextUsers()
+        viewModel.getUsers(isFavoriteUserMode)
     }
 
     private fun initializeUI() {
@@ -107,7 +107,7 @@ class TinderFragment : Fragment(), CardStackListener {
 
     override fun onCardSwiped(direction: Direction?) {
         if (!isFavoriteUserMode && direction == Direction.Right) {
-
+            viewModel.saveFavoriteUser()
             Toast.makeText(activity, "Saved as favorite user", Toast.LENGTH_LONG).show()
         }
         if (!isFavoriteUserMode && manager.topPosition == userCardAdapter.itemCount) {

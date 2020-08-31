@@ -1,10 +1,15 @@
 package com.thuatnguyen.tindersample.di
 
+import android.content.Context
+import androidx.room.Room
 import com.thuatnguyen.tindersample.api.UserApiService
+import com.thuatnguyen.tindersample.db.AppDatabase
+import com.thuatnguyen.tindersample.db.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -34,5 +39,18 @@ class AppModule {
     @Provides
     fun provideUserApiService(retrofit: Retrofit): UserApiService {
         return retrofit.create(UserApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, "tinder_database")
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideTinderDao(database: AppDatabase): UserDao {
+        return database.userDao()
     }
 }

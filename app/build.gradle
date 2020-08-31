@@ -69,6 +69,11 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$versions.hiltViewmodel"
     kapt "androidx.hilt:hilt-compiler:$versions.hiltViewmodel"
 
+    // Room
+    implementation "androidx.room:room-runtime:$versions.room"
+    kapt "androidx.room:room-compiler:$versions.room"
+    implementation "androidx.room:room-ktx:$versions.room"
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

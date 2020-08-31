@@ -1,10 +1,18 @@
 package com.thuatnguyen.tindersample.model
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class User(
+    @PrimaryKey
     val username: String,
     val email: String,
     val dob: String,
+    @Embedded
     val name: Name,
+    @Embedded
     val location: Location,
     val password: String,
     val phone: String,
