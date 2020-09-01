@@ -21,7 +21,7 @@
 
         <variable
             name="callback"
-            type="com.thuatnguyen.tindersample.util.RetryCallback" />
+            type="com.thuatnguyen.tindersample.util.ReloadCallback" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,7 +52,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:visibleGone="@{!ResultKt.isSucceeded(result)}" >
+            app:visibleGone="@{!ResultKt.isSucceeded(result)}">
 
             <ProgressBar
                 android:id="@+id/progress_bar"
@@ -76,8 +76,8 @@
                 android:id="@+id/retry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> callback.retry()}"
-                android:text="@string/retry"
+                android:onClick="@{() -> callback.reload()}"
+                android:text="@string/reload"
                 app:visibleGone="@{!ResultKt.isLoading(result)}" />
 
         </LinearLayout>

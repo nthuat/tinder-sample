@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Tinder Sample</string>
-    <string name="no_data">No data!</string>
-    <string name="retry">Retry</string>
     <string name="title_home">Home</string>
     <string name="title_favorite">Favorite</string>
+    <string name="reload">Reload</string>
+    <string name="no_data">Please add an user to the favorite list or reload to see again!</string>
 </resources>

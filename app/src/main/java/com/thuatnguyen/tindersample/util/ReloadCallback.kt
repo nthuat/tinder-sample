@@ -1,5 +1,5 @@
 package com.thuatnguyen.tindersample.util
 
-interface RetryCallback {
-    fun retry()
+interface ReloadCallback {
+    fun reload()
 }

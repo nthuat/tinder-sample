@@ -55,4 +55,8 @@ class UserViewModel @ViewModelInject constructor(private val userRepository: Use
             }
         }
     }
+
+    fun resetUserData() {
+        _userLiveData.value = null
+    }
 }

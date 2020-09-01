@@ -15,12 +15,12 @@ import com.thuatnguyen.tindersample.R
 import com.thuatnguyen.tindersample.databinding.FragmentTinderBinding
 import com.thuatnguyen.tindersample.model.Result
 import com.thuatnguyen.tindersample.ui.adapter.UserCardAdapter
-import com.thuatnguyen.tindersample.util.RetryCallback
+import com.thuatnguyen.tindersample.util.ReloadCallback
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TinderFragment : Fragment(), CardStackListener, RetryCallback {
+class TinderFragment : Fragment(), CardStackListener, ReloadCallback {
     private lateinit var userCardAdapter: UserCardAdapter
     private lateinit var manager: CardStackLayoutManager
     private lateinit var viewModel: UserViewModel
@@ -84,7 +84,7 @@ class TinderFragment : Fragment(), CardStackListener, RetryCallback {
         }
     }
 
-    override fun retry() {
+    override fun reload() {
         viewModel.getUsers(isFavoriteUserMode)
     }
 
@@ -121,8 +121,12 @@ class TinderFragment : Fragment(), CardStackListener, RetryCallback {
             viewModel.saveFavoriteUser(manager.topPosition - 1)
             Toast.makeText(activity, "Saved as favorite user", Toast.LENGTH_LONG).show()
         }
-        if (!isFavoriteUserMode && manager.topPosition == userCardAdapter.itemCount) {
-            viewModel.getNextUsers()
+        if (manager.topPosition == userCardAdapter.itemCount) {
+            if (!isFavoriteUserMode) {
+                viewModel.getNextUsers()
+            } else {
+                viewModel.resetUserData()
+            }
         }
     }
 
