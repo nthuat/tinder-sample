@@ -2,4 +2,6 @@
     <string name="app_name">Tinder Sample</string>
     <string name="unknown_error">Unknown error!</string>
     <string name="retry">Retry</string>
+    <string name="title_home">Home</string>
+    <string name="title_favorite">Favorite</string>
 </resources>
