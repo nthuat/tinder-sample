@@ -75,8 +75,12 @@ dependencies {
     kapt "androidx.room:room-compiler:$versions.room"
     implementation "androidx.room:room-ktx:$versions.room"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
+    // Test
+    testImplementation "junit:junit:$versions.junit"
+    testImplementation "androidx.test:core:$versions.core"
+    testImplementation "org.mockito:mockito-core:$versions.mockito"
+    testImplementation "com.google.truth:truth:$versions.truth"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$versions.mockserver"
+    androidTestImplementation "androidx.test.ext:junit:$versions.junitext"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
 }
