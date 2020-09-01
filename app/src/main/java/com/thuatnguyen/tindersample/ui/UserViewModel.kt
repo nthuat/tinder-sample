@@ -30,8 +30,16 @@ class UserViewModel @ViewModelInject constructor(private val userRepository: Use
 
     fun getNextUsers() {
         viewModelScope.launch {
-            userRepository.getUsersFromNetwork()
+            userRepository.loadUsersFromNetwork()
                 .collect { _userLiveData.value = it }
+        }
+    }
+
+    private fun getFavoriteUsers() {
+        viewModelScope.launch {
+            userRepository.loadFavoriteUsers().collect {
+                _userLiveData.value = it
+            }
         }
     }
 
@@ -44,14 +52,6 @@ class UserViewModel @ViewModelInject constructor(private val userRepository: Use
                         userRepository.saveFavoriteUser(userList[position])
                     }
                 }
-            }
-        }
-    }
-
-    private fun getFavoriteUsers() {
-        viewModelScope.launch {
-            userRepository.getFavoriteUsers().collect {
-                _userLiveData.value = it
             }
         }
     }

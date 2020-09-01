@@ -9,7 +9,7 @@ sealed class Result<out T> {
 }
 
 val Result<*>?.isSucceeded
-    get() = this is Result.Success && data != null
+    get() = this is Result.Success && data != null && (data as? List<*>)?.isNotEmpty() ?: true
 
 val Result<*>?.isLoading
     get() = this is Result.Loading
@@ -17,7 +17,7 @@ val Result<*>?.isLoading
 val Result<*>?.isError
     get() = this is Result.Error
 
-val <T> Result<T>.data: T?
+val <T> Result<T>?.data: T?
     get() = (this as? Result.Success)?.data
 
 val Result<*>?.message: String?

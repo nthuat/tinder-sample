@@ -5,7 +5,7 @@ data class UserResponse(
 )
 
 data class UserInfo(
-    val seed: String,
     val user: User,
-    val version: String
+    val seed: String?,
+    val version: String?
 )
