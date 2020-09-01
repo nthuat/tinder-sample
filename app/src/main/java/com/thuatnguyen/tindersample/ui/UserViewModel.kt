@@ -5,7 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.thuatnguyen.tindersample.model.Result
 import com.thuatnguyen.tindersample.model.User
+import com.thuatnguyen.tindersample.model.data
+import com.thuatnguyen.tindersample.model.isSucceeded
 import com.thuatnguyen.tindersample.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -14,8 +17,8 @@ import kotlinx.coroutines.launch
 class UserViewModel @ViewModelInject constructor(private val userRepository: UserRepository) :
     ViewModel() {
 
-    private val _userLiveData = MutableLiveData<List<User>>()
-    val userLiveData: LiveData<List<User>> = _userLiveData
+    private val _userLiveData = MutableLiveData<Result<List<User>>>()
+    val userLiveData: LiveData<Result<List<User>>> = _userLiveData
 
     fun getUsers(favoriteUserMode: Boolean) {
         if (favoriteUserMode) {
@@ -32,9 +35,16 @@ class UserViewModel @ViewModelInject constructor(private val userRepository: Use
         }
     }
 
-    fun saveFavoriteUser() {
+    fun saveFavoriteUser(position: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            userLiveData.value?.first()?.let { userRepository.saveFavoriteUser(it) }
+            userLiveData.value?.let {
+                if (it.isSucceeded) {
+                    val userList = it.data!!
+                    if (position in userList.indices) {
+                        userRepository.saveFavoriteUser(userList[position])
+                    }
+                }
+            }
         }
     }
 

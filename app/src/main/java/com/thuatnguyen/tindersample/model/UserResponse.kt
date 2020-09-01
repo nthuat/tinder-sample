@@ -1,10 +1,10 @@
 package com.thuatnguyen.tindersample.model
 
 data class UserResponse(
-    val results: List<Result>
+    val results: List<UserInfo>
 )
 
-data class Result(
+data class UserInfo(
     val seed: String,
     val user: User,
     val version: String

@@ -1,5 +1,6 @@
 package com.thuatnguyen.tindersample.util
 
+import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -20,5 +21,11 @@ object BindingAdapter {
     @BindingAdapter("app:customSrc")
     fun ImageView.setImageSrc(url: String) {
         Glide.with(this).load(url).placeholder(R.drawable.ic_placeholder).circleCrop().into(this)
+    }
+
+    @JvmStatic
+    @BindingAdapter("visibleGone")
+    fun setVisibility(view: View, show: Boolean) {
+        view.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

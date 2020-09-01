@@ -13,12 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.thuatnguyen.tindersample.R
 import com.thuatnguyen.tindersample.databinding.FragmentTinderBinding
+import com.thuatnguyen.tindersample.model.Result
 import com.thuatnguyen.tindersample.ui.adapter.UserCardAdapter
+import com.thuatnguyen.tindersample.util.RetryCallback
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TinderFragment : Fragment(), CardStackListener {
+class TinderFragment : Fragment(), CardStackListener, RetryCallback {
     private lateinit var userCardAdapter: UserCardAdapter
     private lateinit var manager: CardStackLayoutManager
     private lateinit var viewModel: UserViewModel
@@ -42,18 +44,21 @@ class TinderFragment : Fragment(), CardStackListener {
             container,
             false
         )
-        initializeUI()
+        initUI()
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        binding.result = viewModel.userLiveData
+        binding.lifecycleOwner = this
+        binding.callback = this
         registerObservers()
         viewModel.getUsers(isFavoriteUserMode)
     }
 
-    private fun initializeUI() {
+    private fun initUI() {
         manager = CardStackLayoutManager(activity, this).apply {
             setStackFrom(StackFrom.None)
             setVisibleCount(3)
@@ -79,9 +84,15 @@ class TinderFragment : Fragment(), CardStackListener {
         }
     }
 
+    override fun retry() {
+        viewModel.getUsers(isFavoriteUserMode)
+    }
+
     private fun registerObservers() {
         viewModel.userLiveData.observe(viewLifecycleOwner, Observer {
-            userCardAdapter.addUserList(it)
+            if (it is Result.Success) {
+                userCardAdapter.addUserList(it.data)
+            }
         })
     }
 
@@ -107,7 +118,7 @@ class TinderFragment : Fragment(), CardStackListener {
 
     override fun onCardSwiped(direction: Direction?) {
         if (!isFavoriteUserMode && direction == Direction.Right) {
-            viewModel.saveFavoriteUser()
+            viewModel.saveFavoriteUser(manager.topPosition - 1)
             Toast.makeText(activity, "Saved as favorite user", Toast.LENGTH_LONG).show()
         }
         if (!isFavoriteUserMode && manager.topPosition == userCardAdapter.itemCount) {
