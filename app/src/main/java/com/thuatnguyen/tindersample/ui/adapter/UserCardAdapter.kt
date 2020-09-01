@@ -5,12 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.thuatnguyen.tindersample.R
 import com.thuatnguyen.tindersample.databinding.ItemUserBinding
 import com.thuatnguyen.tindersample.model.User
 
-class UserCardAdapter : RecyclerView.Adapter<UserCardAdapter.ViewHolder>() {
+class UserCardAdapter : RecyclerView.Adapter<UserCardAdapter.UserViewHolder>() {
     private var userList = emptyList<User>()
 
     fun addUserList(data: List<User>) {
@@ -18,8 +17,8 @@ class UserCardAdapter : RecyclerView.Adapter<UserCardAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
+        return UserViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.item_user, parent, false
@@ -31,23 +30,32 @@ class UserCardAdapter : RecyclerView.Adapter<UserCardAdapter.ViewHolder>() {
         return userList.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.bind(userList[position])
     }
 
-    class ViewHolder(private val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
+    class UserViewHolder(private val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: User) {
             binding.apply {
                 user = item
+                setDefaultContent(item)
                 executePendingBindings()
-                Glide.with(imgAvatar).load(item.picture).circleCrop().into(imgAvatar)
                 listOf(imgName, imgMail, imgBirthday, imgAddress, imgPhone, imgPassword)
-                    .forEach { it.setOnClickListener { setTitleAndContent(it, item) } }
+                    .forEach {
+                        it.setOnClickListener {
+                            setTitleAndContent(it, item)
+                        }
+                    }
             }
+        }
+
+        private fun setDefaultContent(item: User) {
+            setTitleAndContent(binding.imgName, item)
         }
 
         private fun setTitleAndContent(view: View, user: User) {
             binding.apply {
+                selectedId = view.id
                 val (title, content) = when (view.id) {
                     imgName.id -> "Hi, My name is" to user.name.getFullName()
                     imgMail.id -> "My email address is" to user.email

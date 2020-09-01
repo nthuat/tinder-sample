@@ -8,12 +8,32 @@
             name="user"
             type="com.thuatnguyen.tindersample.model.User" />
 
+        <variable
+            name="selectedId"
+            type="int" />
 
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardUseCompatPadding="true"
+        app:cardPreventCornerOverlap="false"
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@color/white">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/background" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="80dp"
+            android:background="@android:color/darker_gray" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,6 +44,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="20dp"
+                app:customSrc="@{user.picture}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/gray"
                 android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:textColor="@android:color/black"
                 android:textSize="26dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,42 +86,48 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_account" />
+                    android:src="@drawable/ic_account"
+                    app:customTint="@{selectedId}" />
 
                 <ImageView
                     android:id="@+id/img_mail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_email" />
+                    android:src="@drawable/ic_email"
+                    app:customTint="@{selectedId}" />
 
                 <ImageView
                     android:id="@+id/img_birthday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_birthday" />
+                    android:src="@drawable/ic_birthday"
+                    app:customTint="@{selectedId}" />
 
                 <ImageView
                     android:id="@+id/img_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_address" />
+                    android:src="@drawable/ic_address"
+                    app:customTint="@{selectedId}" />
 
                 <ImageView
                     android:id="@+id/img_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_phone" />
+                    android:src="@drawable/ic_phone"
+                    app:customTint="@{selectedId}" />
 
                 <ImageView
                     android:id="@+id/img_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_password" />
+                    android:src="@drawable/ic_password"
+                    app:customTint="@{selectedId}" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
