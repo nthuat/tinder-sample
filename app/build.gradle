@@ -7,7 +7,7 @@ apply from: '../dependencies.gradle'
 
 android {
     compileSdkVersion versions.compileSdk
-    buildToolsVersion "29.0.3"
+    buildToolsVersion versions.buildTools
 
     defaultConfig {
         applicationId "com.thuatnguyen.tindersample"
@@ -44,7 +44,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
 
     // UI
-    implementation "com.google.android.material:material:1.2.0"
+    implementation "com.google.android.material:material:$versions.material"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"
     implementation "androidx.cardview:cardview:$versions.cardview"
     implementation "androidx.recyclerview:recyclerview:$versions.recyclerview"

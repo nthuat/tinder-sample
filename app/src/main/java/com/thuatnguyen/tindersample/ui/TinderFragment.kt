@@ -119,7 +119,7 @@ class TinderFragment : Fragment(), CardStackListener, ReloadCallback {
     override fun onCardSwiped(direction: Direction?) {
         if (!isFavoriteUserMode && direction == Direction.Right) {
             viewModel.saveFavoriteUser(manager.topPosition - 1)
-            Toast.makeText(activity, "Saved as favorite user", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, getString(R.string.add_to_list), Toast.LENGTH_SHORT).show()
         }
         if (manager.topPosition == userCardAdapter.itemCount) {
             if (!isFavoriteUserMode) {
