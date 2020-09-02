@@ -123,7 +123,7 @@ class TinderFragment : Fragment(), CardStackListener, ReloadCallback {
         }
         if (manager.topPosition == userCardAdapter.itemCount) {
             if (!isFavoriteUserMode) {
-                viewModel.getNextUsers()
+                viewModel.getUsersFromNetwork()
             } else {
                 viewModel.resetUserData()
             }

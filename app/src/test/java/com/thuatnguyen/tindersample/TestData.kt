@@ -4,18 +4,17 @@ import com.thuatnguyen.tindersample.model.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
 
+val testUser = User(
+    "thuat26",
+    "thuat@gmail.com", "91989223",
+    Name("Thuat", "Nguyen", "Mr"),
+    Location("HCM", "HCM", "Au Co", "70000"),
+    "123456", "09123456789", "",
+    null, null, null, null, null, null, null, null
+)
 val userResponse = UserResponse(
     listOf(
-        UserInfo(
-            User(
-                "thuat26",
-                "thuat@gmail.com", "91989223",
-                Name("Thuat", "Nguyen", "Mr"),
-                Location("HCM", "HCM", "Au Co", "70000"),
-                "123456", "09123456789", "",
-                null, null, null, null, null, null, null, null
-            ), null, null
-        )
+        UserInfo(testUser, null, null)
     )
 )
 const val errorJson = "{\n" +

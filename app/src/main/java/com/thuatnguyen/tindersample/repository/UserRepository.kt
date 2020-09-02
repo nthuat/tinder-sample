@@ -15,14 +15,14 @@ class UserRepository @Inject constructor(
     private val userDao: UserDao,
     private val dispatcher: CoroutineDispatcher
 ) {
-    fun loadUsersFromNetwork(): Flow<Result<List<User>>> {
+    fun getUsersFromNetwork(): Flow<Result<List<User>>> {
         return flow {
             emit(Result.Loading)
             emit(remoteDataSource.getUsers())
         }.flowOn(dispatcher)
     }
 
-    fun loadFavoriteUsers(): Flow<Result<List<User>>> {
+    fun getFavoriteUsersFromLocal(): Flow<Result<List<User>>> {
         return flow {
             emit(Result.Loading)
             emit(Result.Success(userDao.getAll()))

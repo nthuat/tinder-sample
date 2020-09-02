@@ -20,24 +20,25 @@ class UserViewModel @ViewModelInject constructor(private val userRepository: Use
     private val _userLiveData = MutableLiveData<Result<List<User>>>()
     val userLiveData: LiveData<Result<List<User>>> = _userLiveData
 
-    fun getUsers(favoriteUserMode: Boolean) {
-        if (favoriteUserMode) {
+    fun getUsers(isFavoriteUserMode: Boolean) {
+        if (isFavoriteUserMode) {
             getFavoriteUsers()
         } else {
-            getNextUsers()
+            getUsersFromNetwork()
         }
     }
 
-    fun getNextUsers() {
+    fun getUsersFromNetwork() {
         viewModelScope.launch {
-            userRepository.loadUsersFromNetwork()
-                .collect { _userLiveData.value = it }
+            userRepository.getUsersFromNetwork().collect {
+                _userLiveData.value = it
+            }
         }
     }
 
     private fun getFavoriteUsers() {
         viewModelScope.launch {
-            userRepository.loadFavoriteUsers().collect {
+            userRepository.getFavoriteUsersFromLocal().collect {
                 _userLiveData.value = it
             }
         }

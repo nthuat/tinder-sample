@@ -47,7 +47,7 @@ internal class UserRepositoryTest {
             Result.Success(userResponse.results.map { it.user })
         )
         `when`(service.getUsers()).thenReturn(userResponse)
-        val results = userRepository.loadUsersFromNetwork().toList()
+        val results = userRepository.getUsersFromNetwork().toList()
         assertThat(results).isEqualTo(expected)
     }
 
@@ -62,7 +62,7 @@ internal class UserRepositoryTest {
             Result.Error(gson.fromJson(errorJson, ErrorResponse::class.java).error)
         )
         `when`(service.getUsers()).thenThrow(HttpException(failureResponse))
-        val results = userRepository.loadUsersFromNetwork().toList()
+        val results = userRepository.getUsersFromNetwork().toList()
         assertThat(results).isEqualTo(expected)
     }
 
@@ -74,7 +74,7 @@ internal class UserRepositoryTest {
             Result.Success(users)
         )
         `when`(dao.getAll()).thenReturn(users)
-        val results = userRepository.loadFavoriteUsers().toList()
+        val results = userRepository.getFavoriteUsersFromLocal().toList()
         assertThat(results).isEqualTo(expected)
     }
 
