@@ -82,6 +82,7 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$versions.mockito"
     testImplementation "com.google.truth:truth:$versions.truth"
     testImplementation "com.squareup.okhttp3:mockwebserver:$versions.mockserver"
+    androidTestImplementation "com.google.truth:truth:$versions.truth"
     androidTestImplementation "androidx.test.ext:junit:$versions.junitext"
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
 }
