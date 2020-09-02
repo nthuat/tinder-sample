@@ -2,13 +2,13 @@ package com.thuatnguyen.tindersample.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
-import com.thuatnguyen.tindersample.MainCoroutineRule
-import com.thuatnguyen.tindersample.getOrAwaitValue
+import com.thuatnguyen.tindersample.util.MainCoroutineRule
+import com.thuatnguyen.tindersample.util.getOrAwaitValue
 import com.thuatnguyen.tindersample.model.Result
 import com.thuatnguyen.tindersample.model.User
 import com.thuatnguyen.tindersample.repository.UserRepository
-import com.thuatnguyen.tindersample.testUser
-import com.thuatnguyen.tindersample.userResponse
+import com.thuatnguyen.tindersample.util.testUser
+import com.thuatnguyen.tindersample.util.userResponse
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking

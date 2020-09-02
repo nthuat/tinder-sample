@@ -1,4 +1,4 @@
-package com.thuatnguyen.tindersample
+package com.thuatnguyen.tindersample.util
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

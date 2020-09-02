@@ -14,7 +14,7 @@ suspend fun <T : Any> safeApiCall(call: suspend () -> Result<T>): Result<T> {
     }
 }
 
-private fun parseErrorMessage(exception: Exception): String {
+fun parseErrorMessage(exception: Exception): String {
     return when (exception) {
         is HttpException -> {
             convertErrorBody(exception)?.error ?: exception.message()

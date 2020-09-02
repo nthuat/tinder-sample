@@ -1,8 +1,6 @@
-package com.thuatnguyen.tindersample
+package com.thuatnguyen.tindersample.util
 
 import com.thuatnguyen.tindersample.model.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.ResponseBody.Companion.toResponseBody
 
 val testUser = User(
     "thuat26",
@@ -21,5 +19,6 @@ const val errorJson = "{\n" +
         "  error: \"Uh oh, something has gone wrong. Please tweet us @randomapi about the issue. Thank you.\"\n" +
         "}"
 
-val errorResponseBody = errorJson.toResponseBody("".toMediaTypeOrNull())
+val errorResponse =
+    ErrorResponse("Uh oh, something has gone wrong. Please tweet us @randomapi about the issue. Thank you.")
 

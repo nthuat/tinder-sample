@@ -1,25 +1,24 @@
 package com.thuatnguyen.tindersample.repository
 
 import com.google.common.truth.Truth.assertThat
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.thuatnguyen.tindersample.api.UserApiService
 import com.thuatnguyen.tindersample.api.UserRemoteDataSource
 import com.thuatnguyen.tindersample.db.UserDao
-import com.thuatnguyen.tindersample.errorJson
-import com.thuatnguyen.tindersample.errorResponseBody
-import com.thuatnguyen.tindersample.model.ErrorResponse
 import com.thuatnguyen.tindersample.model.Result
 import com.thuatnguyen.tindersample.model.UserResponse
-import com.thuatnguyen.tindersample.userResponse
+import com.thuatnguyen.tindersample.util.errorJson
+import com.thuatnguyen.tindersample.util.errorResponse
+import com.thuatnguyen.tindersample.util.userResponse
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.ResponseBody.Companion.toResponseBody
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
+import org.mockito.Mockito.*
 import retrofit2.HttpException
 import retrofit2.Response
 
@@ -31,13 +30,18 @@ internal class UserRepositoryTest {
     private lateinit var remoteDataSource: UserRemoteDataSource
     private lateinit var userRepository: UserRepository
     private val testCoroutinesDispatcher = TestCoroutineDispatcher()
-    private lateinit var gson: Gson
 
     @Before
     fun setUp() {
-        gson = GsonBuilder().create()
         remoteDataSource = UserRemoteDataSource(service)
         userRepository = UserRepository(remoteDataSource, dao, testCoroutinesDispatcher)
+    }
+
+
+    @After
+    fun tearDown() {
+        reset(service)
+        reset(dao)
     }
 
     @Test
@@ -55,11 +59,11 @@ internal class UserRepositoryTest {
     fun loadUsersFromNetwork_withError() = runBlockingTest {
         val failureResponse = Response.error<UserResponse>(
             503,
-            errorResponseBody
+            errorJson.toResponseBody("".toMediaTypeOrNull())
         )
         val expected = listOf(
             Result.Loading,
-            Result.Error(gson.fromJson(errorJson, ErrorResponse::class.java).error)
+            Result.Error(errorResponse.error)
         )
         `when`(service.getUsers()).thenThrow(HttpException(failureResponse))
         val results = userRepository.getUsersFromNetwork().toList()

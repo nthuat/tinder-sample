@@ -1,4 +1,4 @@
-package com.thuatnguyen.tindersample
+package com.thuatnguyen.tindersample.util
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
