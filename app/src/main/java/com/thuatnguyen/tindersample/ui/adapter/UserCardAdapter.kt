@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.thuatnguyen.tindersample.R
 import com.thuatnguyen.tindersample.databinding.ItemUserBinding
 import com.thuatnguyen.tindersample.model.User
+import com.thuatnguyen.tindersample.util.toDate
 
 class UserCardAdapter : RecyclerView.Adapter<UserCardAdapter.UserViewHolder>() {
     private var userList = emptyList<User>()
@@ -34,7 +35,8 @@ class UserCardAdapter : RecyclerView.Adapter<UserCardAdapter.UserViewHolder>() {
         holder.bind(userList[position])
     }
 
-    class UserViewHolder(private val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
+    class UserViewHolder(private val binding: ItemUserBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: User) {
             binding.apply {
                 user = item
@@ -59,7 +61,7 @@ class UserCardAdapter : RecyclerView.Adapter<UserCardAdapter.UserViewHolder>() {
                 val (title, content) = when (view.id) {
                     imgName.id -> "Hi, My name is" to user.name.getFullName()
                     imgMail.id -> "My email address is" to user.email
-                    imgBirthday.id -> "My birthday is" to user.dob
+                    imgBirthday.id -> "My birthday is" to user.dob.toDate()
                     imgAddress.id -> "My address is" to user.location.street
                     imgPhone.id -> "My phone number is" to user.phone
                     imgPassword.id -> "My password is" to user.password
