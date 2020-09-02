@@ -6,9 +6,7 @@ import com.thuatnguyen.tindersample.api.UserRemoteDataSource
 import com.thuatnguyen.tindersample.db.UserDao
 import com.thuatnguyen.tindersample.model.Result
 import com.thuatnguyen.tindersample.model.UserResponse
-import com.thuatnguyen.tindersample.util.errorJson
-import com.thuatnguyen.tindersample.util.errorResponse
-import com.thuatnguyen.tindersample.util.userResponse
+import com.thuatnguyen.tindersample.util.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -72,14 +70,19 @@ internal class UserRepositoryTest {
 
     @Test
     fun loadFavoriteUsersFromLocal() = runBlockingTest {
-        val users = userResponse.results.map { it.user }
+        val users = listOf(testUser, testUser2)
         val expected = listOf(
             Result.Loading,
-            Result.Success(users)
+            Result.Success(users.reversed())
         )
         `when`(dao.getAll()).thenReturn(users)
         val results = userRepository.getFavoriteUsersFromLocal().toList()
         assertThat(results).isEqualTo(expected)
     }
 
+    @Test
+    fun saveFavoriteUser() {
+        userRepository.saveFavoriteUser(testUser)
+        verify(dao, times(1)).insert(testUser)
+    }
 }

@@ -25,7 +25,7 @@ class UserRepository @Inject constructor(
     fun getFavoriteUsersFromLocal(): Flow<Result<List<User>>> {
         return flow {
             emit(Result.Loading)
-            emit(Result.Success(userDao.getAll()))
+            emit(Result.Success(userDao.getAll().reversed()))
         }.flowOn(dispatcher)
     }
 

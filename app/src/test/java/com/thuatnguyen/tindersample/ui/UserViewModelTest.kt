@@ -2,16 +2,17 @@ package com.thuatnguyen.tindersample.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
-import com.thuatnguyen.tindersample.util.MainCoroutineRule
-import com.thuatnguyen.tindersample.util.getOrAwaitValue
 import com.thuatnguyen.tindersample.model.Result
 import com.thuatnguyen.tindersample.model.User
 import com.thuatnguyen.tindersample.repository.UserRepository
+import com.thuatnguyen.tindersample.util.MainCoroutineRule
+import com.thuatnguyen.tindersample.util.getOrAwaitValue
 import com.thuatnguyen.tindersample.util.testUser
 import com.thuatnguyen.tindersample.util.userResponse
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -26,17 +27,17 @@ class UserViewModelTest {
 
     @get:Rule
     val coroutineRule = MainCoroutineRule()
-
+    private val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
     private val repository = mock(UserRepository::class.java)
     private lateinit var viewModel: UserViewModel
 
     @Before
     fun setUp() {
-        viewModel = UserViewModel(repository)
+        viewModel = UserViewModel(repository, dispatcher)
     }
 
     @Test
-    fun getFavoriteUsers_withSuccess() = runBlocking {
+    fun getFavoriteUsers_withSuccess() = runBlockingTest {
         val fakeUsers = listOf(testUser)
         val expected = Result.Success(fakeUsers)
         `when`(repository.getFavoriteUsersFromLocal()).thenReturn(flowOf((expected)))
@@ -48,7 +49,7 @@ class UserViewModelTest {
     }
 
     @Test
-    fun getFavoriteUsers_withError() = runBlocking {
+    fun getFavoriteUsers_withError() = runBlockingTest {
         val error = Result.Error("Unexpected error!")
         `when`(repository.getFavoriteUsersFromLocal()).thenReturn(flowOf((error)))
 
@@ -59,7 +60,7 @@ class UserViewModelTest {
     }
 
     @Test
-    fun getUsersFromNetwork_withSuccess() = runBlocking {
+    fun getUsersFromNetwork_withSuccess() = runBlockingTest {
         val fakeUser = userResponse.results.map { it.user }
         val expected = Result.Success(fakeUser)
         `when`(repository.getUsersFromNetwork()).thenReturn(flowOf((expected)))
@@ -71,7 +72,7 @@ class UserViewModelTest {
     }
 
     @Test
-    fun getUsersFromNetwork_withError() = runBlocking {
+    fun getUsersFromNetwork_withError() = runBlockingTest {
         val serverError = Result.Error("Server error!")
         `when`(repository.getUsersFromNetwork()).thenReturn(flowOf((serverError)))
 
@@ -82,18 +83,18 @@ class UserViewModelTest {
     }
 
     @Test
-    fun saveFavoriteUser_withSuccess() = runBlocking {
+    fun saveFavoriteUser_withSuccess() = runBlockingTest {
         val fakeUsers = userResponse.results.map { it.user }
         `when`(repository.getUsersFromNetwork()).thenReturn(flowOf((Result.Success(fakeUsers))))
         viewModel.getUsers(false)
 
         val position = 0
         viewModel.saveFavoriteUser(position)
-        verify(repository).saveFavoriteUser(fakeUsers[position])
+        verify(repository).saveFavoriteUser(any(User::class.java))
     }
 
     @Test
-    fun saveFavoriteUser_withError() = runBlocking {
+    fun saveFavoriteUser_withError() = runBlockingTest {
         val fakeUsers = userResponse.results.map { it.user }
         `when`(repository.getUsersFromNetwork()).thenReturn(flowOf((Result.Success(fakeUsers))))
         viewModel.getUsers(false)

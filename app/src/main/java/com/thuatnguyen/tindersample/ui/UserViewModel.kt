@@ -10,12 +10,14 @@ import com.thuatnguyen.tindersample.model.User
 import com.thuatnguyen.tindersample.model.data
 import com.thuatnguyen.tindersample.model.isSucceeded
 import com.thuatnguyen.tindersample.repository.UserRepository
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class UserViewModel @ViewModelInject constructor(private val userRepository: UserRepository) :
-    ViewModel() {
+class UserViewModel @ViewModelInject constructor(
+    private val userRepository: UserRepository,
+    private val ioDispatcher: CoroutineDispatcher
+) : ViewModel() {
 
     private val _userLiveData = MutableLiveData<Result<List<User>>>()
     val userLiveData: LiveData<Result<List<User>>> = _userLiveData
@@ -45,7 +47,7 @@ class UserViewModel @ViewModelInject constructor(private val userRepository: Use
     }
 
     fun saveFavoriteUser(position: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             userLiveData.value?.let {
                 if (it.isSucceeded) {
                     val userList = it.data!!
