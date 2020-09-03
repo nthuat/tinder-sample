@@ -23,6 +23,13 @@ jobs:
         with:
           name: unit-tests-results
           path: app/build/reports/tests/testDebugUnitTest/index.html
+      - uses: actions/checkout@master
+      - uses: codecov/codecov-action@v1
+        with:
+          directory: app/build/reports/test-results/testDebugUnitTest
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
 
   lint:
     name: Lint Check
