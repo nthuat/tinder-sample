@@ -1,6 +1,6 @@
 # tinder-sample
 
-[![codecov](https://codecov.io/gh/nthuat/tinder-sample/branch/master/graph/badge.svg)](https://codecov.io/gh/nthuat/tinder-sample)
+![build](https://github.com/nthuat/tinder-sample/workflows/Android%20CI/badge.svg) [![codecov](https://codecov.io/gh/nthuat/tinder-sample/branch/master/graph/badge.svg)](https://codecov.io/gh/nthuat/tinder-sample)
 
 A Tinder-like sample based on modern Android application tech stack and MVVM architecture. It uses [Randomuser.me API](https://randomuser.me/api/0.4/?randomapi) for generating random user data.
 
