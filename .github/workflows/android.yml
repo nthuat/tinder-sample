@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     name: Run Unit Tests
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v1
@@ -16,17 +16,21 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Unit tests
-        run: bash ./gradlew test --stacktrace
-      - name: Unit tests results
-        uses: actions/upload-artifact@v1
+      - name: Run unit tests
+        run: ./gradlew testDebugUnitTest
+      - name: Run instrumentation tests
+        uses: reactivecircus/android-emulator-runner@v2
         with:
-          name: unit-tests-results
-          path: app/build/reports/tests/testDebugUnitTest/index.html
-      - uses: actions/checkout@master
+          api-level: 29
+          arch: x86
+          profile: Nexus 6
+          avd-name: test
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: ./gradlew connectedCheck
       - uses: codecov/codecov-action@v1
         with:
-          directory: app/build/reports/test-results/testDebugUnitTest
+          directory: app/build/jacoco
           flags: unittests # optional
           name: codecov-umbrella # optional
           fail_ci_if_error: true # optional (default = false)
