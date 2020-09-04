@@ -18,6 +18,16 @@ jobs:
           java-version: 1.8
       - name: Run unit tests
         run: ./gradlew jacocoTestReport
+      - name: Run instrumentation tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          arch: x86
+          profile: Nexus 6
+          avd-name: test
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: ./gradlew connectedCheck
       - uses: codecov/codecov-action@v1
         with:
           flags: unittests # optional
