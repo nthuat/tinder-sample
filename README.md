@@ -16,6 +16,14 @@ A Tinder-like sample based on modern Android application tech stack and MVVM arc
         + Room Database
    - Retrofit2 & OkHttp3 for networking
    - JUnit4, Mockito, Truth for unit testing
+   
+## Architechture
+<p align="center">
+<img src="https://developer.android.com/topic/libraries/architecture/images/final-architecture.png" width=500/>
+</p>
+<p align="center">
+Source: https://developer.android.com/jetpack/guide
+</p>
 
 ## Features
    - Swipe left or right to see random people with detailed information
