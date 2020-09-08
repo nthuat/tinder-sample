@@ -27,13 +27,12 @@ class UserViewModelTest {
 
     @get:Rule
     val coroutineRule = MainCoroutineRule()
-    private val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
     private val repository = mock(UserRepository::class.java)
     private lateinit var viewModel: UserViewModel
 
     @Before
     fun setUp() {
-        viewModel = UserViewModel(repository, dispatcher)
+        viewModel = UserViewModel(repository)
     }
 
     @Test

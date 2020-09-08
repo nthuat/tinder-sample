@@ -8,6 +8,7 @@ import com.google.common.truth.Truth.assertThat
 import com.thuatnguyen.tindersample.model.Location
 import com.thuatnguyen.tindersample.model.Name
 import com.thuatnguyen.tindersample.model.User
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -44,7 +45,7 @@ class UserDaoTest {
     }
 
     @Test
-    fun insertAndRetrieveUser() {
+    fun insertAndRetrieveUser() = runBlocking {
         userDao.insert(testUser)
         val result = userDao.getAll()
         assertThat(result.size).isEqualTo(1)

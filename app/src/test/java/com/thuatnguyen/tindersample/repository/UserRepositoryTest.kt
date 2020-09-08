@@ -81,7 +81,7 @@ internal class UserRepositoryTest {
     }
 
     @Test
-    fun saveFavoriteUser() {
+    fun saveFavoriteUser() = runBlockingTest {
         userRepository.saveFavoriteUser(testUser)
         verify(dao, times(1)).insert(testUser)
     }
