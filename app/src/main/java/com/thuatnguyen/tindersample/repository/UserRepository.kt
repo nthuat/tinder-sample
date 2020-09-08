@@ -29,7 +29,7 @@ class UserRepository @Inject constructor(
         }.flowOn(dispatcher)
     }
 
-    fun saveFavoriteUser(user: User) {
+    suspend fun saveFavoriteUser(user: User) {
         userDao.insert(user)
     }
 }

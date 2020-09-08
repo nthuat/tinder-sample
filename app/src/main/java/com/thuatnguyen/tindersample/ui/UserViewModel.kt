@@ -15,8 +15,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class UserViewModel @ViewModelInject constructor(
-    private val userRepository: UserRepository,
-    private val ioDispatcher: CoroutineDispatcher
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _userLiveData = MutableLiveData<Result<List<User>>>()
@@ -47,7 +46,7 @@ class UserViewModel @ViewModelInject constructor(
     }
 
     fun saveFavoriteUser(position: Int) {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch {
             userLiveData.value?.let {
                 if (it.isSucceeded) {
                     val userList = it.data!!
